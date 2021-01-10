@@ -4,7 +4,8 @@ import Ubuntu.Components 1.3
 import Ubuntu.Content 1.1
 import Ubuntu.Connectivity 1.0
 import Ubuntu.Components.Popups 1.3
-import com.canonical.Oxide 1.0 as Oxide
+import Morph.Web 0.1
+import QtWebEngine 1.10
 
 import "../components"
 
@@ -581,30 +582,6 @@ Page {
                             '.reader_head .date { clear: left; margin-top: .5em; }' +
                             '</style>'
 
-                    articleBody.loadHtml(
-                        '<!DOCTYPE html>' +
-                        '<html>' +
-                        '<head>' +
-                        '<meta charset="utf-8">' +
-                        '<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />' +
-                        (article_fontFamily != 'Ubuntu' ? '<link href="https://fonts.googleapis.com/css?family=' + article_fontFamily + '" rel="stylesheet">' : '') +
-                        style +
-                        '</head>' +
-                        '<body>' +
-                        '<div class="reader_head">' +
-                        '<h1>' + result.title + '</h1>' +
-                        '<ul class="sub">' +
-                        '<li class="authorsdomain">' +
-                        (authors.length > 0 ? ('<span class="authors">By ' + authors.join(', ') + ', </span>') : '') +
-                        '<span class="domain">' + result.host + '</span>' +
-                        '</li>' +
-                        '<li class="date">' + newdate + '</li>' +
-                        '</ul>' +
-                        '</div>' +
-                        '<div class="fontsize-'+ article_fontSize.toString() +'"><div class="text_body">' + result.article + '</div></div>' +
-                        '</body>' +
-                        '</html>'
-                    );
                 }
             }
         })
@@ -618,23 +595,31 @@ Page {
 
     }
 
-    Oxide.WebContext {
-        id: webcontext
-        userAgent: "Mozilla/5.0 (Linux; U; Android 4.0.3; ko-kr; LG-L160L Build/IML74K) AppleWebkit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30"
+    WebView{
+      id: articleBody
+      anchors {
+          left: parent.left
+          right: parent.right
+          bottom: parent.bottom
+          top: articleViewPage.header.bottom
+      }
+      onNavigationRequested: {
+          Qt.openUrlExternally(request.url);
+      }
+
+
+
+      profile: WebEngineProfile {
+        id: webContext
+        persistentCookiesPolicy: WebEngineProfile.ForcePersistentCookies
+        property alias dataPath: webContext.persistentStoragePath
+
+
+        httpUserAgent: "Mozilla/5.0 (Linux; Android 10; Pixel 4 XL) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.79 Mobile Safari/537.36"
+
+      }
+
+      url: "http://google.at"
     }
 
-    Oxide.WebView {
-        id: articleBody
-        anchors {
-            left: parent.left
-            right: parent.right
-            bottom: parent.bottom
-            top: articleViewPage.header.bottom
-        }
-        context: webcontext
-        onNavigationRequested: {
-            request.action = Oxide.NavigationRequest.ActionReject;
-            Qt.openUrlExternally(request.url);
-        }
-    }
 }

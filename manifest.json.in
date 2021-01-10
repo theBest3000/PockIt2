@@ -5,12 +5,12 @@
     "title": "PockIt",
     "hooks": {
         "PockIt": {
-            "apparmor": "PockIt/PockIt.apparmor",
-            "desktop": "PockIt/PockIt.desktop",
-            "content-hub": "PockIt/content.json"
+            "apparmor": "PockIt.apparmor",
+            "desktop": "PockIt.desktop",
+            "content-hub": "PockIt.content-hub"
         }
     },
     "version": "0.2",
     "maintainer": "Turan Mahmudov <turan.mahmudov@gmail.com>",
-    "framework": "ubuntu-sdk-15.04.6"
+    "framework" : "ubuntu-sdk-16.04"
 }

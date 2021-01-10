@@ -1,6 +1,6 @@
 // DB
 function init() {
-    var db = LocalStorage.openDatabaseSync("pockit", "1.0", "Database for PockIt", "1000000");
+    var db = LocalStorage.openDatabaseSync("feedly", "1.0", "Database for uFeedly", "1000000");
 
     db.transaction(function(tx) {
         tx.executeSql('CREATE TABLE IF NOT EXISTS user(key TEXT UNIQUE, value TEXT)');

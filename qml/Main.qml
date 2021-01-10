@@ -7,14 +7,14 @@ import Ubuntu.Connectivity 1.0
 import Ubuntu.Content 1.1
 import Ubuntu.Components.Popups 1.3
 
-import "qml/components"
-import "qml/ui" as Ui
-import "qml/themes" as Themes
+import "components"
+import "ui" as Ui
+import "themes" as Themes
 
-import "qml/js/localdb.js" as LocalDB
-import "qml/js/user.js" as User
-import "qml/js/apiKeys.js" as ApiKeys
-import "qml/js/scripts.js" as Scripts
+import "js/localdb.js" as LocalDB
+import "js/user.js" as User
+import "js/apiKeys.js" as ApiKeys
+import "js/scripts.js" as Scripts
 
 MainView {
     id: mainView

@@ -2,7 +2,8 @@ import QtQuick 2.4
 import QtQuick.LocalStorage 2.0
 import Ubuntu.Components 1.3
 import Ubuntu.Connectivity 1.0
-import Ubuntu.Web 0.2
+import Morph.Web 0.1
+import QtWebEngine 1.10
 
 import "../components"
 
@@ -34,11 +35,6 @@ Page {
 
         context: webcontext
         incognito: true
-        preferences.localStorageEnabled: true
-        preferences.allowFileAccessFromFileUrls: true
-        preferences.allowUniversalAccessFromFileUrls: true
-        preferences.appCacheEnabled: true
-        preferences.javascriptCanAccessClipboard: true
 
         // the redirect_uri can be any site
         property string redirect_uri : "https://api.github.com/zen"
@@ -47,6 +43,7 @@ Page {
         url: "https://getpocket.com/auth/authorize?request_token="+request_token+"&redirect_uri="+encodeURIComponent(redirect_uri)
 
         onUrlChanged: {
+          console.log("Url changed to "+redirect_uri)
             if (url == redirect_uri) {
                 Scripts.get_access_token()
             } else if (url.toString().substring(0, 24) == "https://getpocket.com/a/") {
